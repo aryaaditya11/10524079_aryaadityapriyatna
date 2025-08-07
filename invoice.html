@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Struk Pemesanan</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .invoice-container {
+      max-width: 600px;
+      margin: auto;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f8f9fa;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .invoice-data p {
+      margin: 5px 0;
+    }
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice-container">
+    <h2>Struk Pemesanan</h2>
+    <div class="invoice-data">
+      <p><strong>Nama:</strong> <span id="inv-nama"></span></p>
+      <p><strong>Email:</strong> <span id="inv-email"></span></p>
+      <p><strong>Alamat:</strong> <span id="inv-alamat"></span></p>
+      <p><strong>Tanggal:</strong> <span id="inv-tanggal"></span></p>
+      <p><strong>Produk:</strong></p>
+      <ul id="inv-produk"></ul>
+    </div>
+  </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+  <a href="index.html">
+    <button style="padding: 10px 20px; font-size: 16px;">⬅️ Kembali ke Beranda</button>
+  </a>
+</div>
+
+
+  <script>
+    const data = JSON.parse(localStorage.getItem("dataInvoice"));
+    if (data) {
+      document.getElementById("inv-nama").textContent = data.nama;
+      document.getElementById("inv-email").textContent = data.email;
+      document.getElementById("inv-alamat").textContent = data.alamat;
+      document.getElementById("inv-tanggal").textContent = data.tanggal;
+
+      const ul = document.getElementById("inv-produk");
+      data.produk.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+
+      localStorage.removeItem("dataInvoice");
+    } else {
+      document.body.innerHTML = "<h2>Data pemesanan tidak ditemukan.</h2>";
+    }
+  
+  
+  </script>
+</body>
+</html>

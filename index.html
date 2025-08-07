@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Toko Sepatu Adidas</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="file.js"></script>
+</body>
+</html>
+</head>
+<body>
+  <div id="toast" class="toast">✅ Pemesanan berhasil dikirim!</div>
+<section id="ringkasan-pemesanan" ...>
+</section>
+
+<header class="header-flex">
+  <aside class="sidebar-header">
+    <h3>Kategori</h3>
+    <ul>
+      <li><a href="#produk">Sepatu Pria</a></li>
+      <li><a href="#produk">Sepatu Casual</a></li>
+    </ul>
+  </aside>
+
+  <h1 class="logo">Adidas Store</h1>
+
+  <nav class="nav-menu">
+    <ul>
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="#tentang">Tentang</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+      <div class="cart-icon" onclick="toggleKeranjang()">
+  🛒 <span id="cart-count">0</span>
+</div>
+<div id="keranjang-popup" class="popup-keranjang">
+  <div class="keranjang-container">
+    <span class="close" onclick="toggleKeranjang()">&times;</span>
+    <h2>Keranjang Belanja</h2>
+    <ul id="isi-keranjang"></ul>
+    <p id="total-harga">Total: Rp 0</p>
+    <button onclick="checkout()">Checkout</button>
+  </div>
+</div>
+<script>
+  let keranjang = [];
+
+  function tambahKeKeranjang(nama, harga) {
+    keranjang.push({ nama, harga });
+    updateKeranjang();
+    showToast(`✅ ${nama} ditambahkan ke keranjang!`);
+  }
+
+  function updateKeranjang() {
+    const count = document.getElementById("cart-count");
+    const list = document.getElementById("isi-keranjang");
+    const total = document.getElementById("total-harga");
+
+    count.textContent = keranjang.length;
+    list.innerHTML = "";
+    let totalHarga = 0;
+
+    keranjang.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.innerHTML = `${item.nama} - Rp ${item.harga.toLocaleString()} <button onclick="hapusItem(${index})">❌</button>`;
+      list.appendChild(li);
+      totalHarga += item.harga;
+    });
+
+    total.textContent = `Total: Rp ${totalHarga.toLocaleString()}`;
+  }
+
+  function hapusItem(index) {
+    keranjang.splice(index, 1);
+    updateKeranjang();
+  }
+
+  function toggleKeranjang() {
+    const popup = document.getElementById("keranjang-popup");
+    popup.style.display = popup.style.display === "flex" ? "none" : "flex";
+  }
+
+  function checkout() {
+    if (keranjang.length === 0) {
+      showToast("❌ Keranjang kosong!", "error");
+      return;
+    }
+
+    showToast("✅ Terima kasih! Pesanan akan diproses.");
+    keranjang = [];
+    updateKeranjang();
+    toggleKeranjang();
+  }
+</script>
+
+
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h2>Sepatu Adidas Original</h2>
+      <p><marquee direction="right">Kualitas terbaik dan desain klasik</marquee></p>
+ 
+
+  
+    </div>
+  </section>
+  <section class="produk" id="produk">
+    <div class="container">
+
+      <div class="produk-list">
+        <div class="produk-item">
+          <img src="adidas-navy.webp" alt="Adidas Handball Spezial Navy" />
+          <h3>Adidas Handball Spezial Navy</h3>
+         
+          <p class="deskripsi-produk">Sepatu klasik bergaya vintage dengan warna navy yang elegan, cocok untuk gaya kasual harian.</p>
+
+
+          <p>Rp 1.700.000</p>
+          <button onclick="tambahKeKeranjang('Handball Spezial Navy', 1700000)">Tambah ke Keranjang</button>
+            
+
+        </div>
+        <div class="produk-item">
+          <img src="adidas-manchester.jpg" alt="Adidas SPZL Greater Manchester" />
+          <h3>Adidas SPZL Greater Manchester</h3>
+
+<p class="deskripsi-produk">Edisi spesial terinspirasi dari kota Manchester dengan nuansa retro dan detail khas seri SPZL.</p>
+
+          <p>Rp 3.999.000</p>
+          <button onclick="tambahKeKeranjang('SPZL Greater Manchester', 3999000)">Tambah ke Keranjang</button>
+
+        </div>
+        <div class="produk-item">
+          <img src="adidas-skyblue.jpg" alt="Adidas Spezial ice Blue" />
+          <h3>Adidas Spezial Ice Blue</h3>
+
+<p class="deskripsi-produk">Tampilan cerah dengan warna ice blue yang mencolok, ringan dan nyaman untuk aktivitas sehari-hari.</p>
+
+
+          <p>Rp 1.700.000</p>
+            <button onclick="tambahKeKeranjang('Handball Spezial ice blue', 1700000)">Tambah ke Keranjang</button>
+        
+
+        </div>
+      </div>
+    </div>
+  </section>
+  
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+<div id="formulir-checkout" class="popup-formulir">
+  <div class="form-container">
+    <span class="close" onclick="tutupFormulirCheckout()">&times;</span>
+    <h2>Formulir Pemesanan</h2>
+    <form id="formCheckout">
+      <label>Nama Lengkap:</label>
+      <input type="text" name="nama" required />
+
+      <label>Email:</label>
+      <input type="email" name="email" required />
+
+      <label>Alamat Pengiriman:</label>
+      <textarea name="alamat" required></textarea>
+
+      <button type="submit">Kirim Pemesanan</button>
+    </form>
+  </div>
+</div>
+
+  <section class="tentang" id="tentang">
+    <footer><h2>Tentang Kami</h2>
+    <p>Kami menjual sepatu Adidas original dengan kualitas terbaik dan pengiriman cepat.</p>
+  </footer>
+  </section>
+ <section class="kontak" id="kontak">
+    <h2>Kontak</h2>
+    <p>IS2_10524079_AryaAdityaPriyatna</p>
+     <img src="1721060536132.jpg" alt width="300" />
+       
+<section class="testimoni" id="testimoni">
+  <h2>Testimoni Pelanggan</h2>
+  <div class="testimoni-container">
+    <div class="testimoni-card">
+      <img src="avatar1.jpg" alt="Dimas" class="avatar">
+      <div class="rating">⭐⭐⭐⭐⭐</div>
+      <p class="review">"Sepatunya nyaman dan pengirimannya cepat!"</p>
+      <p class="nama">@dimas_08</p>
+    </div>
+    <div class="testimoni-card">
+      <img src="avatar2.jpg" alt="Alya" class="avatar">
+      <div class="rating">⭐⭐⭐⭐</div>
+      <p class="review">"Warna sesuai foto, recommended seller!"</p>
+      <p class="nama">@alya_sh</p>
+    </div>
+  </div>
+</section>
+
+
+  </section>
+ <footer>
+    <p>&copy; 2025 Adidas Store. All rights reserved.</p>
+  </footer>
+  
+
+<script>
+  
+
+
+</script>
+
+<script src="file.js"></script>
+
+<script>
+  function showToast(pesan, type = "success") {
+    const toast = document.getElementById("toast");
+    toast.textContent = pesan;
+    toast.className = "toast"; // reset
+
+    if (type === "error") toast.classList.add("error");
+    toast.classList.add("show");
+
+    setTimeout(() => {
+      toast.classList.remove("show", "error");
+    }, 3000);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const nama = form.querySelector('[name="nama"]').value.trim();
+      const email = form.querySelector('[name="email"]').value.trim();
+      const jumlah = form.querySelector('[name="jumlah"]').value.trim();
+      const alamat = form.querySelector('[name="alamat"]').value.trim();
+
+      if (!nama || !email || !jumlah || !alamat) {
+        showToast("❌ Harap lengkapi semua data!", "error");
+        return;
+      }
+
+      showToast("✅ Pemesanan berhasil dikirim!");
+      document.getElementById("formulir-popup").style.display = "none";
+      form.reset();
+    });
+  });
+</script>
+
+</script>
+
+
+</body>
+
+</html>
